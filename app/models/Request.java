@@ -30,7 +30,7 @@ public class Request extends Model{
   private long fkStudentId;
   private long fkConditionId;
   
-  @ManyToOne(cascade=CascadeType.ALL )
+  @ManyToOne( )
   public Book book;
   
   @ManyToOne()
