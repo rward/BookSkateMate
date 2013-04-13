@@ -37,7 +37,7 @@ public class ModelTest {
       
       
     }
-    
+     
     @After
     public void stopApp() {
       
@@ -85,12 +85,16 @@ public class ModelTest {
      
      assertTrue( "Condition name not Used ",  "Used".equals(conditionUsed.getConditionName())  );
      assertTrue( "ConditionName name not Used ",  "Used".equals(conditionNameUsed.name) );
-     
+      
     
-      Offer offer = new Offer(100,conditionNew);
-      conditionNew.addOffer(offer);
-      student.addOffer(offer);
-      book.addOffer(offer);
+      //Offer offer = new Offer(100,conditionNew);
+     Offer offer = new Offer(100,conditionNew,book,student);
+     
+     conditionNew.addOffer(offer);
+     student.addOffer(offer);
+     book.addOffer(offer);
+        
+      
            
       assertEquals("Added 1 offer to condition",  1, conditionNew.getOffers().size());
       assertEquals("Added 1 offer to student",  1, student.getOffers().size());
@@ -121,9 +125,9 @@ public class ModelTest {
       
     //Get Book from database 
       Student dbStudent =  Student.find().findList().get(0);
-      assertTrue("Student First","First".equals(dbStudent.firstName) );
-      assertTrue("Student Last","Last".equals(dbStudent.lastName ) );
-      assertTrue("Student Email","Email".equals(dbStudent.email));
+      assertEquals("Student First","First", dbStudent.getFirstName() );
+      assertEquals("Student Last","Last", dbStudent.getLastName());
+      assertEquals("Student Email","Email", dbStudent.getEmail());
      
       ConditionName dbConditionName = ConditionName.find().findList().get(0);
       assertTrue("Condition Name","New".equals(dbConditionName.name) );
@@ -131,7 +135,7 @@ public class ModelTest {
       
       //Get offer from database 
       Offer dbOffer =  Offer.find().findList().get(0);
-      assertEquals("Offer Price",100,dbOffer.price,.1);
+      assertEquals("Offer Price",100,dbOffer.getPrice(),.1);
       assertEquals("Offer Book Id",1,dbOffer.getBook().id);
       assertTrue("Offer Condition Name",
           "New".equals(dbOffer.getCondition().getConditionName()));
@@ -139,7 +143,7 @@ public class ModelTest {
       
      //Get request from database 
       Request dbRequest =  Request.find().findList().get(0);
-      assertEquals("Request Price",100,dbRequest.price,.1);
+      assertEquals("Request Price",100,dbRequest.price ,.1);
       assertEquals("Request Book Id",1,dbRequest.getBook().id);
       assertTrue("Request Condition Name not Used",
           "Used".equals(dbRequest.getCondition().getConditionName()));
@@ -165,43 +169,46 @@ public class ModelTest {
       // check request is associated with Book 
       assertEquals("Request -Book ID", dbRequest.id,books.get(0).requests.get(0).id);
       assertEquals("Request Book Author vs Book Author", 
-          dbRequest.getBook().author,books.get(0).author);
+          dbRequest.getBook().getAuthor(),books.get(0).getAuthor());
       assertEquals("Request Book Title vs Book Title", 
           dbRequest.getBook().title,books.get(0).title);
       
       // check request is associated with Student 
       assertEquals("Request ID -Student Request ID", dbRequest.id,
           students.get(0).requests.get(0).id);
-      assertEquals("Request Student Email vs Student Email", dbRequest.getStudent().email
-          ,students.get(0).email);
-      assertEquals("Request Student First vs Student First", dbRequest.getStudent().firstName
-          ,students.get(0).firstName);
-      assertEquals("Request Student Last vs Student Last", dbRequest.getStudent().lastName 
-          ,students.get(0).lastName);
+      assertEquals("Request Student Email vs Student Email", dbRequest.getStudent().getEmail()
+          ,students.get(0).getEmail());
+      assertEquals("Request Student First vs Student First", dbRequest.getStudent().getFirstName()
+          ,students.get(0).getFirstName());
+      assertEquals("Request Student Last vs Student Last", dbRequest.getStudent().getLastName() 
+          ,students.get(0).getLastName());
       
       
       // check Offer is associated with Book 
       assertEquals("Offer -Book ID", dbOffer.id,books.get(0).requests.get(0).id);
       assertEquals("Offer Book Author vs Book Author", 
-          dbOffer.getBook().author,books.get(0).author);
+          dbOffer.getBook().getAuthor(),books.get(0).getAuthor());
       assertEquals("Offer Book Title vs Book Title", 
-          dbOffer.getBook().title,books.get(0).title);
+          dbOffer.getBook().getTitle(),books.get(0).getTitle());
       
       // check request is associated with Student 
       assertEquals("Offer ID -Student Offer ID", dbOffer.id,
           students.get(0).requests.get(0).id);
-      assertEquals("Offer Student Email vs Student Email", dbOffer.getStudent().email
-          ,students.get(0).email);
-      assertEquals("Offer Student First vs Student First", dbOffer.getStudent().firstName
-          ,students.get(0).firstName);
-      assertEquals("Offer Student Last vs Student Last", dbOffer.getStudent().lastName 
-          ,students.get(0).lastName);
+      assertEquals("Offer Student Email vs Student Email", dbOffer.getStudent().getEmail()
+          ,students.get(0).getEmail());
+      assertEquals("Offer Student First vs Student First", dbOffer.getStudent().getFirstName()
+          ,students.get(0).getFirstName());
+      assertEquals("Offer Student Last vs Student Last", dbOffer.getStudent().getLastName() 
+          ,students.get(0).getLastName());
       
-      //create new offer check book/student doesn't refer to it
-      Offer offer2 = new Offer(1000,conditionNew);
-      offer2.save();
+      
       assertTrue("Current Book has > 1 offer",books.get(0).getOffers().size() == 1);
       assertTrue("Current Student has > 1 offer",students.get(0).getOffers().size() == 1);
+      //create new offer check book/student doesn't refer to it
+      Offer offer2 = new Offer(1000,conditionNew,book,student);
+      offer2.save();
+     
+     
       
       //create new offer check book/student doesn't refer to it
       Request request2 = new Request(1000,conditionNew);
@@ -272,13 +279,14 @@ public class ModelTest {
        
       //delete request
       remove.delete();
-      assertEquals("Number of requests left after delete",Offer.find().findList().size() ,0);
-      //request.delete();
-      //assertEquals("Number of offers left after delete",Offer.find().findList().size() ,0);
+      assertEquals("Number of requests left after delete",1,Request.find().findList().size());
       
-            
+      remove =  Request.find().findList().get(0);
+      //delete request
+      remove.delete();
+      assertEquals("Number of requests left after delete",0,Request.find().findList().size());
       
-           
+          
       book.delete();
       assertTrue("Should be no more books in database", Book.find().findList().isEmpty());
      

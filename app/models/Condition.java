@@ -21,7 +21,7 @@ public class Condition extends Model {
   @Id
   public long id ;
   
-  public long fkConditionNameId;
+ 
   
   
   @OneToOne(mappedBy="condition",cascade=CascadeType.ALL)
@@ -77,19 +77,19 @@ public class Condition extends Model {
   }
   public List<Offer> getOffers() {
     
-    return Offer.find().query().where("fkConditionId = " + this.id).findList();
+    return offers;
       
    }
    
    public List<Request> getRequests() {
      
-     return Request.find().query().where("fkConditionId = " + this.id).findList();
+     return requests;
        
     }
   
   public String getConditionName() {
-    if (fkConditionNameId !=  0) {
-      return ConditionName.find().byId(fkConditionNameId).name;
+    if (conditionName !=  null) {
+      return conditionName.name;
     }
     return null;
   }

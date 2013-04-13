@@ -126,13 +126,13 @@ public class Student extends Model{
   }
   public List<Offer> getOffers() {
     
-    return Offer.find().query().where("fkStudentId = " + this.id).findList();
+    return offers;
       
    }
    
    public List<Request> getRequests() {
      
-     return Request.find().query().where("fkStudentId = " + this.id).findList();
+     return requests;
        
     }
   

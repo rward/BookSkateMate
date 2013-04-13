@@ -43,6 +43,15 @@ public class Book extends Model{
     this.author = author;    
     
   }
+ public Book (String title, String author, String isbn, int edition, double bookStorePrice){
+    
+    this.title = title;
+    this.author = author;    
+    this.isbn = isbn;
+    this.edition = edition;
+    this.bookStorePrice = bookStorePrice;
+  }
+  
   /**
    * @return the title
    */
@@ -68,7 +77,6 @@ public class Book extends Model{
     this.author = author;
   }
   
- 
   /**
    * @return the isbn
    */
@@ -109,8 +117,10 @@ public class Book extends Model{
 
  
   public void clearOffers() {
-    
-    offers.clear();
+    for (Offer offer : offers ) {
+      offer.removeBook();
+    }
+     
   }
   public void addOffer(Offer offer) {
     
@@ -153,13 +163,13 @@ public class Book extends Model{
   
   public List<Offer> getOffers() {
     
-    return Offer.find().query().where("fkBookId = " + this.id).findList();
+    return offers;
       
    }
    
    public List<Request> getRequests() {
      
-     return Request.find().query().where("fkBookId = " + this.id).findList();
+     return requests;
        
     }
   public static Finder<Long,Book> find() {

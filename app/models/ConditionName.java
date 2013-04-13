@@ -41,8 +41,6 @@ public class ConditionName extends Model {
   public void setCondition(Condition  condition) {
       
       condition.conditionName = this;
-      condition.fkConditionNameId = this.id;
-           
       condition.save();
       this.condition = condition;
       fkConditionId = condition.id;
