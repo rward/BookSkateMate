@@ -2,11 +2,13 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 @Entity
 public class Student extends Model{
@@ -16,24 +18,58 @@ public class Student extends Model{
    */
   private static final long serialVersionUID = 1765615104131291592L;
   @Id
-  public long id;
-  public String firstName;
-  public String lastName;
-  public String email;
+  private long primaryKey;
+  @Required
+  @Column(unique=true, nullable=false)
+  private String studentId;
+  
+  @Required
+  private String firstName;
+  @Required
+  private String lastName;
+  @Required
+  private String email;
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
   public List<Offer> offers = new ArrayList<>();
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
   public List<Request> requests = new ArrayList<>();
-
-  public Student(String firstName,String lastName, String email) {
+ 
+  /**
+   * 
+   * @param studentId
+   * @param firstName
+   * @param lastName
+   * @param email
+   */
+  public Student(String studentId, String firstName,String lastName, String email) {
    
+    this.studentId = studentId;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
   }
- 
+  /**
+   * 
+   */
+  public String toString() {
+    return String.format("[ %s %s %s %s ]", studentId,firstName,lastName,email) ;
+  }
+  /**
+   * @return the studentId
+   */
+  public String getStudentId() {
+    return studentId;
+  }
+
+  /**
+   * @param studentId the studentId to set
+   */
+  public void setStudentId(String studentId) {
+    this.studentId = studentId;
+  }
+
   /**
    * @return the firstName
    */

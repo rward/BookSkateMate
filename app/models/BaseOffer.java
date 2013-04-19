@@ -24,20 +24,21 @@ public class BaseOffer extends Model{
    */
   private static final long serialVersionUID = -2599641293013380598L;
   @Id
-  public long id;
-  public double price;
+  private long primaryKey;
   
-  
-  
-  @ManyToOne()
-   public Book book;
+ 
+
+  private double price;
   
   @ManyToOne()
-   public Student student;
+  private Book book;
+  
+  @ManyToOne()
+  private Student student;
 
   
   @ManyToOne()
-  public Condition condition;
+  private Condition condition;
 
   public BaseOffer (double price, Condition condition) {
 
@@ -55,7 +56,18 @@ public class BaseOffer extends Model{
    
    
   }
-  
+  /**
+   * @return the primaryKey
+   */
+  public long getPrimaryKey() {
+    return primaryKey;
+  }
+  /**
+   * @param primaryKey the primaryKey to set
+   */
+  public void setPrimaryKey(long primaryKey) {
+    this.primaryKey = primaryKey;
+  }
   public void removeBook() {
     book = null;
    
