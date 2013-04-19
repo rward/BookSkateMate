@@ -17,3 +17,22 @@ GET     /books                      controllers.Book.index()
 GET     /books/:bookId              controllers.Book.details(bookId: String)
 POST    /books                      controllers.Book.newBook()
 DELETE  /books/:bookId              controllers.Book.delete(bookId: String)  
+
+GET     /condition                  controllers.Condition.index()     
+POST    /condition                  controllers.Condition.newCondition()
+DELETE  /condition/:name            controllers.Condition.delete(name: String)  
+
+
+
+GET     /offers                     controllers.Offer.index()     
+GET     /offers/:studentId          controllers.Offer.details(studentId: String)
+GET     /offers/:studentId/:bookId  controllers.Offer.offerDetails(studentId: String,bookId: String)
+POST    /offers                     controllers.Offer.newOffer()
+DELETE  /offers/:offerId            controllers.Offer.delete(offerId: String)  
+
+
+GET     /requests                     controllers.CurrentRequest.index()     
+GET     /requests/:studentId          controllers.CurrentRequest.details(studentId: String)
+GET     /requests/:studentId/:bookId  controllers.CurrentRequest.offerDetails(studentId: String,bookId: String)
+POST    /requests                     controllers.CurrentRequest.newOffer()
+DELETE  /requests/:primaryKey         controllers.CurrentRequest.delete(primaryKey: String)  

@@ -19,6 +19,19 @@ public class Student extends Model{
   private static final long serialVersionUID = 1765615104131291592L;
   @Id
   private long primaryKey;
+  /**
+   * @return the primaryKey
+   */
+  public long getPrimaryKey() {
+    return primaryKey;
+  }
+  /**
+   * @param primaryKey the primaryKey to set
+   */
+  public void setPrimaryKey(long primaryKey) {
+    this.primaryKey = primaryKey;
+  }
+
   @Required
   @Column(unique=true, nullable=false)
   private String studentId;
@@ -31,10 +44,10 @@ public class Student extends Model{
   private String email;
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
-  public List<Offer> offers = new ArrayList<>();
+  public List<CurrentOffer> offers = new ArrayList<>();
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
-  public List<Request> requests = new ArrayList<>();
+  public List<CurrentRequest> requests = new ArrayList<>();
  
   /**
    * 
@@ -125,14 +138,14 @@ public class Student extends Model{
     
     offers.clear();
   }
- public void addOffer(Offer offer) {
+ public void addOffer(CurrentOffer offer) {
     
    offer.setStudent(this);
    offers.add(offer);
    offer.save();
    this.save();
   }
- public void removeOffer(Offer offer) {
+ public void removeOffer(CurrentOffer offer) {
    
    offers.remove(offer);
    offer.removeStudent();
@@ -140,7 +153,7 @@ public class Student extends Model{
    this.save();
  }
 
- public void addRequest(Request request) {
+ public void addRequest(CurrentRequest request) {
    
    request.setStudent(this);
    requests.add(request);
@@ -148,7 +161,7 @@ public class Student extends Model{
    this.save();
    
  }
- public void removeRequest(Request request) {
+ public void removeRequest(CurrentRequest request) {
    
    requests.remove(request);
    request.removeStudent();
@@ -160,13 +173,13 @@ public class Student extends Model{
     
     requests.clear();
   }
-  public List<Offer> getOffers() {
+  public List<CurrentOffer> getOffers() {
     
     return offers;
       
    }
    
-   public List<Request> getRequests() {
+   public List<CurrentRequest> getRequests() {
      
      return requests;
        

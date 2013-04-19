@@ -10,9 +10,9 @@ import static org.junit.Assert.assertTrue;
 
 import models.Book;
 import models.Condition;
-import models.ConditionName;
-import models.Offer;
-import models.Request;
+
+import models.CurrentRequest;
+import models.CurrentOffer;
 import models.Student;
 
 
@@ -52,35 +52,26 @@ public class ModelTest {
       Student student = new Student("StudentID01", "First","Last","Email");
       student.save();
       
-     ConditionName  conditionNameNew  = new ConditionName();
-     conditionNameNew.setName("New");
-     conditionNameNew.save();
+    
      
-     ConditionName  conditionNameUsed  = new ConditionName();
-     conditionNameUsed.setName("Used");
-     conditionNameUsed.save();
-     
-     Condition conditionNew = new Condition();
-     conditionNameNew.setCondition(conditionNew);
-     
-     Condition conditionUsed = new Condition();
-     conditionNameUsed.setCondition(conditionUsed);
+     Condition conditionNew = new Condition("New");
+     conditionNew.save();
+     Condition conditionUsed = new Condition("Used");
+     conditionUsed.save(); 
      
           
-     
+  
      conditionNew = Condition.find().findList().get(0);
-     conditionNameNew = ConditionName.find().findList().get(0);
-     
-     assertTrue( "Condition name not New ",  "New".equals(conditionNew.getConditionName())  );
-     assertTrue( "ConditionName name not New ",  "New".equals(conditionNameNew.name) );
+     assertTrue( "Condition name not New ",  "New".equals(conditionNew.getName())  );
+    
      
      conditionUsed = Condition.find().findList().get(1);
-     conditionNameUsed = ConditionName.find().findList().get(1);
+    
      
-     assertTrue( "Condition name not Used ",  "Used".equals(conditionUsed.getConditionName())  );
-     assertTrue( "ConditionName name not Used ",  "Used".equals(conditionNameUsed.name) );
+     assertTrue( "Condition name not Used ",  "Used".equals(conditionUsed.getName())  );
+   
          
-     Offer offer = new Offer(100,conditionNew,book,student);
+     CurrentOffer offer = new CurrentOffer(100,conditionNew,book,student);
      
      conditionNew.addOffer(offer);
      student.addOffer(offer);
@@ -90,9 +81,9 @@ public class ModelTest {
       assertEquals("Added 1 offer to student",  1, student.getOffers().size());
       assertEquals("Added 1 offer to book",  1, book.getOffers().size());
       
-      Request request = new Request(100, conditionUsed);
+      CurrentRequest request = new CurrentRequest(100, conditionUsed,book,student );
             
-      conditionUsed.addRequest(request);
+      conditionUsed.addRequest(request); 
       student.addRequest(request);
       book.addRequest(request);
       
@@ -119,24 +110,23 @@ public class ModelTest {
       assertEquals("Student Last","Last", dbStudent.getLastName());
       assertEquals("Student Email","Email", dbStudent.getEmail());
      
-      ConditionName dbConditionName = ConditionName.find().findList().get(0);
-      assertTrue("Condition Name","New".equals(dbConditionName.name) );
+     
       
       
       //Get offer from database 
-      Offer dbOffer =  Offer.find().findList().get(0);
+      CurrentOffer dbOffer =  CurrentOffer.find().findList().get(0);
       assertEquals("Offer Price",100,dbOffer.getPrice(),.1);
       assertEquals("Offer Book Id",1,dbOffer.getBook().getPrimaryKey());
       assertTrue("Offer Condition Name",
-          "New".equals(dbOffer.getCondition().getConditionName()));
+          "New".equals(dbOffer.getCondition().getName()));
       
       
      //Get request from database 
-      Request dbRequest =  Request.find().findList().get(0);
-      assertEquals("Request Price",100,dbRequest.price ,.1);
+      CurrentRequest dbRequest =  CurrentRequest.find().findList().get(0);
+      assertEquals("Request Price",100,dbRequest.getPrice() ,.1);
       assertEquals("Request Book Id",1,dbRequest.getBook().getPrimaryKey());
       assertTrue("Request Condition Name not Used",
-          "Used".equals(dbRequest.getCondition().getConditionName()));
+          "Used".equals(dbRequest.getCondition().getName()));
       //retrieve the entire model from the database
       
     }
@@ -156,37 +146,31 @@ public class ModelTest {
       Student student = new Student("StudentID01","First","Last","Email");
       student.save();
       
-     ConditionName  conditionNameNew  = new ConditionName();
-     conditionNameNew.setName("New");
-     conditionNameNew.save();
+    
      
-     ConditionName  conditionNameUsed  = new ConditionName();
-     conditionNameUsed.setName("Used");
-     conditionNameUsed.save();
+     Condition conditionNew = new Condition("New");;
+        
+     conditionNew.save();
      
-     Condition conditionNew = new Condition();
-     conditionNameNew.setCondition(conditionNew);
-     
-     Condition conditionUsed = new Condition();
-     conditionNameUsed.setCondition(conditionUsed);
-     
+     Condition conditionUsed = new Condition("Used");
+     conditionUsed.save();
           
      
      conditionNew = Condition.find().findList().get(0);
-     conditionNameNew = ConditionName.find().findList().get(0);
+   
      
-     assertTrue( "Condition name not New ",  "New".equals(conditionNew.getConditionName())  );
-     assertTrue( "ConditionName name not New ",  "New".equals(conditionNameNew.name) );
+     assertTrue( "Condition name not New ",  "New".equals(conditionNew.getName())  );
+   
      
      conditionUsed = Condition.find().findList().get(1);
-     conditionNameUsed = ConditionName.find().findList().get(1);
+    
      
-     assertTrue( "Condition name not Used ",  "Used".equals(conditionUsed.getConditionName())  );
-     assertTrue( "ConditionName name not Used ",  "Used".equals(conditionNameUsed.name) );
+     assertTrue( "Condition name not Used ",  "Used".equals(conditionUsed.getName())  );
+     
       
     
       //Offer offer = new Offer(100,conditionNew);
-     Offer offer = new Offer(100,conditionNew,book,student);
+     CurrentOffer offer = new CurrentOffer(100,conditionNew,book,student);
      
      conditionNew.addOffer(offer);
      student.addOffer(offer);
@@ -198,7 +182,7 @@ public class ModelTest {
       assertEquals("Added 1 offer to student",  1, student.getOffers().size());
       assertEquals("Added 1 offer to book",  1, book.getOffers().size());
       
-      Request request = new Request(100, conditionUsed);
+      CurrentRequest request = new CurrentRequest(100, conditionUsed,book,student);
             
       conditionUsed.addRequest(request);
       student.addRequest(request);
@@ -227,53 +211,52 @@ public class ModelTest {
       assertEquals("Student Last","Last", dbStudent.getLastName());
       assertEquals("Student Email","Email", dbStudent.getEmail());
      
-      ConditionName dbConditionName = ConditionName.find().findList().get(0);
-      assertTrue("Condition Name","New".equals(dbConditionName.name) );
-      
+        
+       
       
       //Get offer from database 
-      Offer dbOffer =  Offer.find().findList().get(0);
+      CurrentOffer dbOffer =  CurrentOffer.find().findList().get(0);
       assertEquals("Offer Price",100,dbOffer.getPrice(),.1);
       assertEquals("Offer Book Id",1,dbOffer.getBook().getPrimaryKey());
       assertTrue("Offer Condition Name",
-          "New".equals(dbOffer.getCondition().getConditionName()));
+          "New".equals(dbOffer.getCondition().getName()));
       
       
      //Get request from database 
-      Request dbRequest =  Request.find().findList().get(0);
-      assertEquals("Request Price",100,dbRequest.price ,.1);
+      CurrentRequest dbRequest =  CurrentRequest.find().findList().get(0);
+      assertEquals("Request Price",100,dbRequest.getPrice() ,.1);
       assertEquals("Request Book Id",1,dbRequest.getBook().getPrimaryKey() );
       assertTrue("Request Condition Name not Used",
-          "Used".equals(dbRequest.getCondition().getConditionName()));
+          "Used".equals(dbRequest.getCondition().getName()));
       //retrieve the entire model from the database
       
-      List<ConditionName> conditionNames = ConditionName.find().findList();
+      
       List<Condition> conditions = Condition.find().findList();
       List<Book> books = Book.find().findList();
       List<Student> students = Student.find().findList();
-      List<Offer> offers = Offer.find().findList();
-      List<Request> requests = Request.find().findList();
+      List<CurrentOffer> offers = CurrentOffer.find().findList();
+      List<CurrentRequest> requests = CurrentRequest.find().findList();
      
       // check that we've recovered all our entities.
       
-      assertEquals("Checking conditionNames", conditionNames.size(), 2);
+     
       assertEquals("Checking conditions", conditions.size(), 2);
       assertEquals("Checking books", books.size(), 1);
       assertEquals("Checking sudents", students.size(), 1);
       assertEquals("Checking offers", offers.size(), 1);
       assertEquals("Checking requests", requests.size(), 1);
       
-      
+       
       // check request is associated with Book 
-      assertEquals("Request -Book ID", dbRequest.id,books.get(0).requests.get(0).id);
+      assertEquals("Request -Book ID", dbRequest.getPrimaryKey() ,books.get(0).requests.get(0).getPrimaryKey()); 
       assertEquals("Request Book Author vs Book Author", 
           dbRequest.getBook().getAuthor(),books.get(0).getAuthor());
       assertEquals("Request Book Title vs Book Title", 
           dbRequest.getBook().getTitle(),books.get(0).getTitle());
       
       // check request is associated with Student 
-      assertEquals("Request ID -Student Request ID", dbRequest.id,
-          students.get(0).requests.get(0).id);
+      assertEquals("Request ID -Student Request ID", dbRequest.getPrimaryKey(),
+          students.get(0).requests.get(0).getPrimaryKey());
       assertEquals("Request Student Email vs Student Email", dbRequest.getStudent().getEmail()
           ,students.get(0).getEmail());
       assertEquals("Request Student First vs Student First", dbRequest.getStudent().getFirstName()
@@ -283,7 +266,7 @@ public class ModelTest {
       
       
       // check Offer is associated with Book 
-      assertEquals("Offer -Book ID", dbOffer.getPrimaryKey(),books.get(0).requests.get(0).id);
+      assertEquals("Offer -Book ID", dbOffer.getPrimaryKey(),books.get(0).requests.get(0).getPrimaryKey());
       assertEquals("Offer Book Author vs Book Author", 
           dbOffer.getBook().getAuthor(),books.get(0).getAuthor());
       assertEquals("Offer Book Title vs Book Title", 
@@ -291,7 +274,7 @@ public class ModelTest {
       
       // check request is associated with Student 
       assertEquals("Offer ID -Student Offer ID", dbOffer.getPrimaryKey(),
-          students.get(0).requests.get(0).id);
+          students.get(0).requests.get(0).getPrimaryKey());
       assertEquals("Offer Student Email vs Student Email", dbOffer.getStudent().getEmail()
           ,students.get(0).getEmail());
       assertEquals("Offer Student First vs Student First", dbOffer.getStudent().getFirstName()
@@ -303,13 +286,13 @@ public class ModelTest {
       assertTrue("Current Book has > 1 offer",books.get(0).getOffers().size() == 1);
       assertTrue("Current Student has > 1 offer",students.get(0).getOffers().size() == 1);
       //create new offer check book/student doesn't refer to it
-      Offer offer2 = new Offer(1000,conditionNew,book,student);
+      CurrentOffer offer2 = new CurrentOffer(1000,conditionNew,book,student);
       offer2.save();
      
      
       
       //create new offer check book/student doesn't refer to it
-      Request request2 = new Request(1000,conditionNew);
+      CurrentRequest request2 = new CurrentRequest(1000,conditionNew,book,student);
       request2.save();
       assertTrue("Current Book has > 1 request",books.get(0).getRequests().size() == 1);
       assertTrue("Current Student has > 1 request",students.get(0).getRequests().size() == 1);
@@ -367,22 +350,22 @@ public class ModelTest {
      
      
       dbOffer.delete();
-      assertEquals("Number of offers left after delete",Offer.find().findList().size() ,1);
+      assertEquals("Number of offers left after delete",CurrentOffer.find().findList().size() ,1);
       offer2.delete();
-      assertEquals("Number of offers left after delete",Offer.find().findList().size() ,0);
+      assertEquals("Number of offers left after delete",CurrentOffer.find().findList().size() ,0);
    
       //remove condition
-      Request remove =  conditions.get(1).getRequests().get(0);
+      CurrentRequest remove =  conditions.get(1).getRequests().get(0);
       conditions.get(1).removeRequest(remove);
        
       //delete request
       remove.delete();
-      assertEquals("Number of requests left after delete",1,Request.find().findList().size());
+      assertEquals("Number of requests left after delete",1,CurrentRequest.find().findList().size());
       
-      remove =  Request.find().findList().get(0);
+      remove =  CurrentRequest.find().findList().get(0);
       //delete request
       remove.delete();
-      assertEquals("Number of requests left after delete",0,Request.find().findList().size());
+      assertEquals("Number of requests left after delete",0,CurrentRequest.find().findList().size());
       
           
       book.delete();

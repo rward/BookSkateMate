@@ -42,10 +42,10 @@ public class Book extends Model{
    
   
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-  public List<Request> requests = new ArrayList<>();
+  public List<CurrentRequest> requests = new ArrayList<>();
   
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER )
-  public List<Offer> offers = new ArrayList<>();
+  public List<CurrentOffer> offers = new ArrayList<>();
   /**
    * Constructor for book with all required fields.
    * @param bookId The unique identifier to use to find a book
@@ -167,19 +167,19 @@ public class Book extends Model{
 
  
   public void clearOffers() {
-    for (Offer offer : offers ) {
+    for (CurrentOffer offer : offers ) {
       offer.removeBook();
     }
      
   }
-  public void addOffer(Offer offer) {
+  public void addOffer(CurrentOffer offer) {
     
     offer.setBook(this);
     offers.add(offer);
     offer.save();
     this.save();
   }
-  public void removeOffer(Offer offer) {
+  public void removeOffer(CurrentOffer offer) {
    
     offers.remove(offer);
     offer.removeBook();
@@ -187,7 +187,7 @@ public class Book extends Model{
     this.save();
   }
    
-  public void addRequest(Request request) {
+  public void addRequest(CurrentRequest request) {
     
     request.setBook(this);
     requests.add(request);
@@ -196,7 +196,7 @@ public class Book extends Model{
     
   }
   
-  public void removeRequest(Request request) {
+  public void removeRequest(CurrentRequest request) {
    
     requests.remove(request);
     request.removeBook();
@@ -211,13 +211,13 @@ public class Book extends Model{
   }
   
   
-  public List<Offer> getOffers() {
+  public List<CurrentOffer> getOffers() {
     
     return offers;
       
    }
    
-   public List<Request> getRequests() {
+   public List<CurrentRequest> getRequests() {
      
      return requests;
        

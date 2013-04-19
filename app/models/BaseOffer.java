@@ -1,23 +1,24 @@
 package models;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import javax.persistence.ManyToOne;
 
 
+import play.data.validation.Constraints.Required;
+import play.data.validation.Validation;
 import play.db.ebean.Model;
 @Entity
 //@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 public class BaseOffer extends Model{
-
-
-
 
   /**
    * 
@@ -25,13 +26,25 @@ public class BaseOffer extends Model{
   private static final long serialVersionUID = -2599641293013380598L;
   @Id
   private long primaryKey;
+
+  @Required
+  @Transient
+  public String studentId;
+  @Required
+  @Transient
+  public String bookId;
+  @Required
+  @Transient
+  public String conditionName;
+
   
- 
 
   private double price;
   
+ 
   @ManyToOne()
   private Book book;
+  
   
   @ManyToOne()
   private Student student;
@@ -47,6 +60,13 @@ public class BaseOffer extends Model{
    
    
   }
+  /**
+   * 
+   * @param price
+   * @param condition
+   * @param book
+   * @param student
+   */
   public BaseOffer (double price, Condition condition, Book book, Student student) {
 
     this.price = price;
@@ -56,6 +76,14 @@ public class BaseOffer extends Model{
    
    
   }
+  /**
+   * 
+   */
+  public String toString() {
+    return String.format("[ %s %s %s %s %s ]"
+        ,book.getBookId() , book.getTitle(),student.getStudentId(),condition.getName(),price) ;
+  }
+  
   /**
    * @return the primaryKey
    */
@@ -114,11 +142,7 @@ public class BaseOffer extends Model{
     return price;
   }
   
-  public static Finder<Long,Offer> find() {
-    
-    return new Finder<Long,Offer>(Long.class,Offer.class);
-  }
-
+ 
  
 
 }

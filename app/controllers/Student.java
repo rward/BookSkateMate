@@ -37,8 +37,7 @@ public class Student extends Controller {
     }
     
     return ok(student.toString());
-     
-    
+        
   }
 public static Result delete(String studentId) {
     
