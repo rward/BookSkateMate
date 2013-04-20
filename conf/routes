@@ -24,15 +24,13 @@ DELETE  /condition/:name            controllers.Condition.delete(name: String)
 
 
 
-GET     /offers                     controllers.Offer.index()     
-GET     /offers/:studentId          controllers.Offer.details(studentId: String)
-GET     /offers/:studentId/:bookId  controllers.Offer.offerDetails(studentId: String,bookId: String)
-POST    /offers                     controllers.Offer.newOffer()
-DELETE  /offers/:offerId            controllers.Offer.delete(offerId: String)  
+GET     /offers                     controllers.CurrentOffer.index()     
+GET     /offers/:studentId/:bookId  controllers.CurrentOffer.details(studentId: String,bookId: String)
+POST    /offers                     controllers.CurrentOffer.newOffer()
+DELETE  /offers/:studentId/:bookId  controllers.CurrentOffer.delete(studentId: String,bookId: String)
 
 
 GET     /requests                     controllers.CurrentRequest.index()     
-GET     /requests/:studentId          controllers.CurrentRequest.details(studentId: String)
-GET     /requests/:studentId/:bookId  controllers.CurrentRequest.offerDetails(studentId: String,bookId: String)
+GET     /requests/:studentId/:bookId  controllers.CurrentRequest.details(studentId: String,bookId: String)
 POST    /requests                     controllers.CurrentRequest.newOffer()
-DELETE  /requests/:primaryKey         controllers.CurrentRequest.delete(primaryKey: String)  
+DELETE  /requests/:studentId/:bookId  controllers.CurrentRequest.delete(studentId: String,bookId: String)

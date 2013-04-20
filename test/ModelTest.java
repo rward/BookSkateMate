@@ -1,21 +1,13 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import com.avaje.ebean.Ebean;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
-
-
 import models.Book;
 import models.Condition;
-
 import models.CurrentRequest;
 import models.CurrentOffer;
 import models.Student;
-
-
 import play.test.FakeApplication;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;

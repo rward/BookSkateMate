@@ -5,7 +5,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import play.data.validation.Constraints.Required;
@@ -48,6 +47,14 @@ public class Student extends Model{
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
   public List<CurrentRequest> requests = new ArrayList<>();
+  
+  
+  @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
+  public List<RemovedOffer> removedOffers = new ArrayList<>();
+  
+  @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
+  public List<RemovedRequest> removedRequests = new ArrayList<>();
+  
  
   /**
    * 
@@ -143,14 +150,14 @@ public class Student extends Model{
    offer.setStudent(this);
    offers.add(offer);
    offer.save();
-   this.save();
+  
   }
  public void removeOffer(CurrentOffer offer) {
    
    offers.remove(offer);
    offer.removeStudent();
    offer.save();
-   this.save();
+   
  }
 
  public void addRequest(CurrentRequest request) {
@@ -158,7 +165,7 @@ public class Student extends Model{
    request.setStudent(this);
    requests.add(request);
    request.save();
-   this.save();
+   
    
  }
  public void removeRequest(CurrentRequest request) {
@@ -166,7 +173,7 @@ public class Student extends Model{
    requests.remove(request);
    request.removeStudent();
    request.save();
-   this.save();
+   //this.save();
  }
  
   public void clearRequests() {

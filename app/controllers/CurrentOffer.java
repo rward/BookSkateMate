@@ -5,9 +5,17 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import java.util.List;
 import static play.data.Form.form;
-
-public class Offer extends Controller  {
+/**
+ * Controller for offers that are currently active.
+ * @author Robert Ward
+ *
+ */
+public class CurrentOffer extends Controller  {
   
+  /**
+   * Response for a request for all the CurrentOffers available.
+   * @return Either the string with list of CurrentOffers or the string "No Offers"
+   */
   public static Result index() {
     
     List<models.CurrentOffer> offers = models.CurrentOffer.find().findList();
@@ -15,20 +23,21 @@ public class Offer extends Controller  {
 
   }
   
-  public static Result details(String studentId) {
-    
-    models.CurrentOffer offer = models.CurrentOffer.find().where().eq("student.studentId", studentId).findUnique();
-    return (offer == null) ? notFound("No offer found") : ok(offer.toString());
-    
-  }
- public static Result offerDetails(String studentId, String bookId) {
+  /**
+   * Response for a request the details CurrentOffers available.
+   * @return Either the string details of an Offers or the string "No offer found"
+   */
+ public static Result details(String studentId, String bookId) {
     
     models.CurrentOffer offer = models.CurrentOffer.find().where()
         .eq("student.studentId", studentId).eq("book.bookId", bookId).findUnique();
     return (offer == null) ? notFound("No offer found") : ok(offer.toString());
     
   }
-  
+ /**
+  * Response for a request the creation of a new offer.
+  * @return OK or badRequest based on whether new request created
+  */
   public static Result newOffer() {
     
     Form<models.CurrentOffer> offerForm = form(models.CurrentOffer.class).bindFromRequest();
@@ -56,9 +65,15 @@ public class Offer extends Controller  {
      
     
   }
-  public static Result delete(String studentId) {
+  /**
+   * Response for a request the deletion of an offer.
+   * @return OK or badRequest based on whether it was deleted or not if offer does 
+   * not exist returns OK.
+   * 
+   */
+  public static Result delete(String studentId, String bookId) {
     
-    models.CurrentOffer offer = models.CurrentOffer.find().where().eq("student.studentId", studentId).findUnique();
+    models.CurrentOffer offer = models.CurrentOffer.find().where().eq("student.studentId", studentId).eq("book.bookId", bookId).findUnique();
     
     if (offer != null) {
       models.RemovedOffer removed = new models.RemovedOffer(offer);

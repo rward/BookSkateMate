@@ -8,37 +8,42 @@ import static play.data.Form.form;
 
 public class CurrentRequest extends Controller  {
   
+  
+  /**
+   * Response for a request for all the CurrentRequest available.
+   * @return Either the string with list of CurrentOffers or the string "No Requests"
+   */
   public static Result index() {
       
     List<models.CurrentRequest> offers = models.CurrentRequest.find().findList();
     return ok(offers.isEmpty() ? "No Requests" : offers.toString());
 
   }
-  
-  public static Result details(String studentId) {
+  /**
+   * Response for a request the details CurrentRequests available.
+   * @return Either the string details of an Offers or the string "No request found"
+   */  
+ public static Result details(String studentId, String bookId) {
     
-    models.CurrentRequest offer = models.CurrentRequest.find().where().eq("student.studentId", studentId).findUnique();
-    return (offer == null) ? notFound("No request found") : ok(offer.toString());
-    
-  }
- public static Result offerDetails(String studentId, String bookId) {
-    
-    models.CurrentRequest offer = models.CurrentRequest.find().where()
+    models.CurrentRequest request = models.CurrentRequest.find().where()
         .eq("student.studentId", studentId).eq("book.bookId", bookId).findUnique();
-    return (offer == null) ? notFound("No request found") : ok(offer.toString());
+    return (request == null) ? notFound("No request found") : ok(request.toString());
     
   }
-  
+ /**
+  * Response for a request the creation of a new request.
+  * @return OK or badRequest based on whether new request created
+  */
   public static Result newOffer() {
     
-    Form<models.CurrentRequest> offerForm = form(models.CurrentRequest.class).bindFromRequest();
+    Form<models.CurrentRequest> requestForm = form(models.CurrentRequest.class).bindFromRequest();
         
-    if(offerForm.hasErrors()) {
+    if(requestForm.hasErrors()) {
       
       return badRequest("The offer StudetnId, BookId and Condtion name required.");
     }
    
-    models.CurrentRequest offer = offerForm.get();
+    models.CurrentRequest offer = requestForm.get();
     if(offer.getStudent().getPrimaryKey() == 0 || offer.getBook().getPrimaryKey() == 0 ||
         offer.getCondition().getPrimaryKey() == 0 ) {
       
@@ -56,9 +61,16 @@ public class CurrentRequest extends Controller  {
      
     
   }
-  public static Result delete(String studentId) {
+  /**
+   * Response for a request the deletion of an request.
+   * @return OK or badRequest based on whether it was deleted or not.If offer does 
+   * not exist returns OK.
+   * 
+   */
+  public static Result delete(String studentId, String bookId)  {
     
-    models.CurrentRequest request = models.CurrentRequest.find().where().eq("student.studentId", studentId).findUnique();
+    models.CurrentRequest request = models.CurrentRequest.find().where()
+        .eq("student.studentId", studentId).eq("book.bookId", bookId).findUnique();
     if (request != null) {
       
       models.RemovedRequest removed = new   models.RemovedRequest(request);

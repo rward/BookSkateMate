@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -41,11 +40,54 @@ public class Book extends Model{
   
    
   
+  /**
+   * @return the removedRequests
+   */
+  public List<RemovedRequest> getRemovedRequests() {
+    return removedRequests;
+  }
+  /**
+   * @param removedRequests the removedRequests to set
+   */
+  public void setRemovedRequests(List<RemovedRequest> removedRequests) {
+    this.removedRequests = removedRequests;
+  }
+  /**
+   * @return the removedOffers
+   */
+  public List<RemovedOffer> getRemovedOffers() {
+    return removedOffers;
+  }
+  /**
+   * @param removedoffers the removedOffers to set
+   */
+  public void setRemovedOffers(List<RemovedOffer> removedoffers) {
+    this.removedOffers = removedoffers;
+  }
+  /**
+   * @param requests the requests to set
+   */
+  public void setRequests(List<CurrentRequest> requests) {
+    this.requests = requests;
+  }
+  /**
+   * @param offers the offers to set
+   */
+  public void setOffers(List<CurrentOffer> offers) {
+    this.offers = offers;
+  }
+  @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+  public List<RemovedRequest>removedRequests = new ArrayList<>();
+  
+  @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER )
+  public List<RemovedOffer> removedOffers = new ArrayList<>();
+  
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
   public List<CurrentRequest> requests = new ArrayList<>();
   
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER )
   public List<CurrentOffer> offers = new ArrayList<>();
+  
   /**
    * Constructor for book with all required fields.
    * @param bookId The unique identifier to use to find a book
@@ -177,14 +219,14 @@ public class Book extends Model{
     offer.setBook(this);
     offers.add(offer);
     offer.save();
-    this.save();
+    
   }
   public void removeOffer(CurrentOffer offer) {
    
     offers.remove(offer);
     offer.removeBook();
     offer.save();
-    this.save();
+    
   }
    
   public void addRequest(CurrentRequest request) {
@@ -192,7 +234,7 @@ public class Book extends Model{
     request.setBook(this);
     requests.add(request);
     request.save();
-    this.save();
+    
     
   }
   
@@ -201,7 +243,7 @@ public class Book extends Model{
     requests.remove(request);
     request.removeBook();
     request.save();
-    this.save();
+    
   }
   
   

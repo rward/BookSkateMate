@@ -8,14 +8,20 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 public class Condition extends Controller  {
-  
+  /**
+   * Response for a request for all the conditions available
+   * @return Either the string with list of books or the string "No books"
+   */
   public static Result index() {
     
     List<models.Condition> conditions = models.Condition.find().findList();
     return ok(conditions.isEmpty() ? "No Conditions" : conditions.toString());
 
   }
-  
+  /**
+   * Response for a request creation of new condition.
+   * @return Either OK or badRequest if invalid request.
+   */
   public static Result newCondition() {
     
     Form<models.Condition> conditionForm = form(models.Condition.class).bindFromRequest();
@@ -41,6 +47,11 @@ public class Condition extends Controller  {
      
     
   }
+  
+  /**
+   * Response for a request delete a condition.
+   * @return Either OK or badRequest if invalid request t odelete.
+   */
 public static Result delete(String name) {
     
     models.Condition condition = models.Condition.find().where().eq("name", name).findUnique();

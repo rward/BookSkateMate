@@ -11,13 +11,14 @@ import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
 import static play.test.Helpers.stop;
-import static play.test.Helpers.status;
+import static play.test.Helpers.status; 
 import java.util.HashMap;
 import java.util.Map;
 import models.Book;
 import models.Condition;
-import models.CurrentRequest;
 import models.CurrentOffer;
+import models.RemovedOffer;
+import models.RemovedRequest;
 import models.Student;
 import org.junit.After;
 import org.junit.Before;
@@ -206,7 +207,7 @@ public class ControllerTest {
   @Test
   public void TestOfferController() {
   //Test Get 
-    Result result = callAction(controllers.routes.ref.Offer.index());
+    Result result = callAction(controllers.routes.ref.CurrentOffer.index());
     assertTrue("Empty Offers", contentAsString(result).contains("No Offers"));
     
     //Test GET /product/on a database containing a single product
@@ -227,20 +228,20 @@ public class ControllerTest {
     models.CurrentOffer offer = new CurrentOffer( 22.20 ,  condition,  book,  student);
     offer.save();
         
-    result = callAction(controllers.routes.ref.Offer.index());
+    result = callAction(controllers.routes.ref.CurrentOffer.index());
     assertTrue("One Offer", contentAsString(result).contains(bookId));
 
     //Test GET /product/Student-01
-    result = callAction(controllers.routes.ref.Offer.details(studentId));
+    result = callAction(controllers.routes.ref.CurrentOffer.details(studentId,bookId));
     assertTrue("Offer detail", contentAsString(result).contains(bookId));
      
     //Test GET /offer/Student-01,Book-01 
-    result = callAction(controllers.routes.ref.Offer.offerDetails(studentId,bookId));
+    result = callAction(controllers.routes.ref.CurrentOffer.details(studentId,bookId));
     assertTrue("Offer detail", contentAsString(result).contains(bookId));
     
     
     //Test GET /product/BadBookId  and make sure we get a 404
-    result = callAction(controllers.routes.ref.Offer.details("BadBookId"));
+    result = callAction(controllers.routes.ref.CurrentOffer.details("BadStudentId","BadBookId"));
     assertEquals("Offer detail (bad)", NOT_FOUND ,status(result));
     
   //Test GET /product/on a database containing a single product
@@ -259,23 +260,31 @@ public class ControllerTest {
     
     FakeRequest request = fakeRequest();
     request.withFormUrlEncodedBody(offerData);
-    result = callAction(controllers.routes.ref.Offer.newOffer(),request);
+    result = callAction(controllers.routes.ref.CurrentOffer.newOffer(),request);
         
     assertEquals("Create new Offer",OK, status(result));
     
-        
+         
     // Test POST /products (with simulated, invalid form data
     request = fakeRequest();
-    result = callAction(controllers.routes.ref.Offer.newOffer(),request);
+    result = callAction(controllers.routes.ref.CurrentOffer.newOffer(),request);
     assertEquals("Create bad offer fails",BAD_REQUEST, status(result));
     
      
     // Test DELETE /products/Product-01(a valid ProductId)
-    result = callAction(controllers.routes.ref.Offer.delete(bookId));
+    result = callAction(controllers.routes.ref.CurrentOffer.delete(studentId,bookId));
     assertEquals("Delete current product OK",OK, status(result));
-    result = callAction(controllers.routes.ref.Offer.details(bookId));
+    
+    RemovedOffer dbOffer =  RemovedOffer.find().findList().get(0);
+    assertEquals("Removed Request Price",22.20,dbOffer.getPrice(),.1);
+    assertEquals("Removed Request Book Id",1,dbOffer.getBook().getPrimaryKey());
+    assertTrue("Removed Request Condition Name",
+        "Condition-01".equals(dbOffer.getCondition().getName()));
+    
+    
+    result = callAction(controllers.routes.ref.CurrentOffer.details(studentId,bookId));
     assertEquals("Delete current product OK",NOT_FOUND, status(result));
-    result = callAction(controllers.routes.ref.Offer.delete(bookId));
+    result = callAction(controllers.routes.ref.CurrentOffer.delete(studentId,bookId));
     assertEquals("Delete current product OK",OK, status(result));
     
     
@@ -309,16 +318,16 @@ public class ControllerTest {
     assertTrue("One Offer", contentAsString(result).contains(bookId));
 
     //Test GET /product/Student-01
-    result = callAction(controllers.routes.ref.CurrentRequest.details(studentId));
+    result = callAction(controllers.routes.ref.CurrentRequest.details(studentId,bookId));
     assertTrue("Offer detail", contentAsString(result).contains(bookId));
      
     //Test GET /offer/Student-01,Book-01 
-    result = callAction(controllers.routes.ref.CurrentRequest.offerDetails(studentId,bookId));
+    result = callAction(controllers.routes.ref.CurrentRequest.details(studentId,bookId));
     assertTrue("Offer detail", contentAsString(result).contains(bookId));
     
     
     //Test GET /product/BadBookId  and make sure we get a 404
-    result = callAction(controllers.routes.ref.CurrentRequest.details("BadBookId"));
+    result = callAction(controllers.routes.ref.CurrentRequest.details("BadStudentID","BadBookId"));
     assertEquals("Offer detail (bad)", NOT_FOUND ,status(result));
     
   //Test GET /product/on a database containing a single product
@@ -342,19 +351,28 @@ public class ControllerTest {
     assertEquals("Create new Offer",OK, status(result));
     
         
-    // Test POST /products (with simulated, invalid form data
+    // Test POST /requests (with simulated, invalid form data
     request = fakeRequest();
     result = callAction(controllers.routes.ref.CurrentRequest.newOffer(),request);
     assertEquals("Create bad offer fails",BAD_REQUEST, status(result));
     
      
-    // Test DELETE /products/Product-01(a valid ProductId)
-    result = callAction(controllers.routes.ref.CurrentRequest.delete(bookId));
+    // Test DELETE 
+    result = callAction(controllers.routes.ref.CurrentRequest.delete(studentId,bookId));
     assertEquals("Delete current product OK",OK, status(result));
-    result = callAction(controllers.routes.ref.CurrentRequest.details(bookId));
-    assertEquals("Delete current product OK",NOT_FOUND, status(result));
-    result = callAction(controllers.routes.ref.CurrentRequest.delete(bookId));
-    assertEquals("Delete current product OK",OK, status(result));
+    
+    //check if request was moved to removed requests
+    RemovedRequest dbrequest =  RemovedRequest.find().findList().get(0);
+    assertEquals("Removed Request Price",22.20,dbrequest.getPrice(),.1);
+    assertEquals("Removed Request Book Id",1,dbrequest.getBook().getPrimaryKey());
+    assertTrue("Removed Request Condition Name",
+        "Condition-01".equals(dbrequest.getCondition().getName()));
+    
+    
+    result = callAction(controllers.routes.ref.CurrentRequest.details(studentId,bookId));
+    assertEquals("Delete current request OK",NOT_FOUND, status(result));
+    result = callAction(controllers.routes.ref.CurrentRequest.delete(studentId,bookId));
+    assertEquals("Delete current request OK",OK, status(result));
     
     
   }
