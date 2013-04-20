@@ -52,7 +52,7 @@ public class ControllerTest {
     Result result = callAction(controllers.routes.ref.Student.index());
     assertTrue("Empty Students", contentAsString(result).contains("No Students"));
     
-    //Test GET /product/on a database containing a single product
+    //Test GET /students/on a database containing a single student
     String studentId = "Students-01";
     models.Student student = new Student(studentId, "firstName","lastName", "email");
     student.save();
@@ -61,11 +61,11 @@ public class ControllerTest {
     
     
     
-    //Test GET /product/Product-01
+    //Test GET /students/Students-01
     result = callAction(controllers.routes.ref.Student.details(studentId));
     assertTrue("Student detail", contentAsString(result).contains(studentId));
     
-    //Test GET /product/BadProductId  and make sure we get a 404
+    //Test GET /student/BadStudetnsId  and make sure we get a 404
     result = callAction(controllers.routes.ref.Student.details("BadStudentId"));
     assertEquals("Student detail (bad)", NOT_FOUND ,status(result));
     
@@ -77,7 +77,7 @@ public class ControllerTest {
     FakeRequest request = fakeRequest();
     request.withFormUrlEncodedBody(studentData);
     result = callAction(controllers.routes.ref.Student.newStudent(),request);
-    assertEquals("Create new product",OK, status(result));
+    assertEquals("Create new Student",OK, status(result));
     
     //request duplicate addition
     request = fakeRequest();
@@ -210,17 +210,17 @@ public class ControllerTest {
     Result result = callAction(controllers.routes.ref.CurrentOffer.index());
     assertTrue("Empty Offers", contentAsString(result).contains("No Offers"));
     
-    //Test GET /product/on a database containing a single product
+    //Create a book to use in the offer
     String bookId = "Book-01";
     models.Book book = new Book(bookId, "title","author","isbn", 20,22.20);
     book.save();
     
-    //Test GET /product/on a database containing a single product
+    //Create a book to use in the offer
     String studentId = "Students-01";
     models.Student student = new Student(studentId, "firstName","lastName", "email");
     student.save();
     
-    //Test GET /product/on a database containing a single product
+    //Create a book to use in the offer
     String name = "Condition-01";
     models.Condition condition = new Condition(name);
     condition.save();
@@ -231,7 +231,7 @@ public class ControllerTest {
     result = callAction(controllers.routes.ref.CurrentOffer.index());
     assertTrue("One Offer", contentAsString(result).contains(bookId));
 
-    //Test GET /product/Student-01
+    
     result = callAction(controllers.routes.ref.CurrentOffer.details(studentId,bookId));
     assertTrue("Offer detail", contentAsString(result).contains(bookId));
      
@@ -244,7 +244,7 @@ public class ControllerTest {
     result = callAction(controllers.routes.ref.CurrentOffer.details("BadStudentId","BadBookId"));
     assertEquals("Offer detail (bad)", NOT_FOUND ,status(result));
     
-  //Test GET /product/on a database containing a single product
+    //Create a book to use in the offer
     String bookId2 = "Book-02";
     models.Book book2 = new Book(bookId2, "title","author","isbn", 20,22.20);
     book2.save();

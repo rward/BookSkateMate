@@ -12,8 +12,7 @@ import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 @Entity
 public class Condition extends Model {
-  
-  
+   
   /**
    * 
    */
