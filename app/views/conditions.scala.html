@@ -1,0 +1,88 @@
+@(message: String,conditions : List[models.Condition] )
+@implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+
+@main("Add Condition") {
+    <br>
+    <br>
+    <br>
+   <div class="container">
+  <div class="row main-features">
+    <br>
+    <div class="span6">
+      <div class="well">
+        <h3>Create a New Condition</h3>
+        
+        @helper.form(action = routes.Condition.newCondition()) {
+         <div class="span2">
+          <span class="label label-inverse">Book Condition</span> 
+        </div>
+         <div class="span3">
+          <input name="name" type="text" class="input-medium"> 
+        </div>
+         <div class="span2">
+          <span class="label label-inverse">Password</span> 
+        </div>
+         <div class="span3">
+          <input name="password" type="text" class="input-medium"> 
+        </div>
+        <div class="span5">
+            <input type="submit" class="btn btn-primary btn-large btn-block" value="New Condition" />
+        </div>
+        }
+        <br>
+        <br>
+        <br>
+        <br>
+        <br> 
+      </div>
+    </div> 
+    <div class="span7">
+    <p>
+    @message
+    </p>
+    </div>
+    <div class="span7">
+     <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>
+              <span class="label label-info">ID </span> 
+            </th>
+            <th>
+              <span class="label label-info">Condition </span> 
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+         @for(condition <- conditions) {
+         <tr>
+            <td>
+              @condition.getPrimaryKey()
+            </td>
+            <td>
+              <input type="text" value=@condition.getName() class="input-medium"> 
+            </td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-small btn-primary">Update</a>
+                <a class="btn btn-small btn-danger">Remove</a> 
+              </div>
+            </td>
+          </tr>
+         
+            
+            } 
+        
+          
+          
+        </tbody>
+      </table>
+    
+    
+       
+    </div>
+  </div>
+</div>
+}
+ 

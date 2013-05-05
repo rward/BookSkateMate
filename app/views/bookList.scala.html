@@ -1,0 +1,86 @@
+@(message: String,books : List[models.Book] )
+@implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+
+@main("Book List") {
+    <br>
+    <br>
+    <br>
+   <div class="container">
+  <div class="row main-features">
+    <br>
+     <h3>All Current Books</h3>
+     <div class="span7">
+     <table class="table table-condensed table-striped">
+        <thead>
+          <tr>
+            <th>
+              <span class="label label-info">Key </span> 
+            </th>
+            <th>
+              <span class="label label-info">Book ID </span> 
+            </th>
+            <th>
+              <span class="label label-info">Title </span> 
+            </th>
+            <th>
+              <span class="label label-info">Author </span> 
+            </th>
+            <th>
+              <span class="label label-info">Version </span> 
+            </th>
+            <th>
+              <span class="label label-info">ISBN </span> 
+            </th>
+            <th>
+              <span class="label label-info">Store Prices </span> 
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        
+         @for(book <- books) {
+         <tr>
+            <td>
+              @book.getPrimaryKey()
+            </td>
+            <td>
+              <input type="text" value=@book.getPrimaryKey() class="input-medium"> 
+            </td>
+            <td>
+              <input type="text" value=@book.getBookId() class="input-medium"> 
+            </td>
+            <td>
+              <input type="text" value=@book.getTitle() class="input-medium"> 
+            </td>
+            <td>
+              <input type="text" value=@book.getAuthor() class="input-medium"> 
+            </td>
+            <td>
+              <input type="text" value=@book.getEdition() class="input-medium"> 
+            </td>
+             <td>
+              <input type="text" value=@book.getIsbn() class="input-medium"> 
+            </td>
+             <td>
+              <input type="text" value=@book.getBookStorePrice() class="input-medium"> 
+            </td>
+            <td>
+              <div class="btn-group">
+                <a class="btn btn-small btn-primary">Update</a>
+               
+              </div>
+            </td>
+          </tr>
+         
+            
+            } 
+        
+          
+          
+        </tbody>
+      </table>
+       @if(books.size() ==0){ No Books in Inventory}
+      }
+    

@@ -5,9 +5,20 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import java.util.List;
 import static play.data.Form.form;
+import views.html.myRequests;
+
+
 
 public class CurrentRequest extends Controller  {
   
+  
+  public static Result myRequests() {
+    
+    List<models.CurrentOffer> offersList = models.CurrentOffer.find().findList();
+    List<models.Book> bookList = models.Book.find().findList();
+    List<models.Condition> conditions = models.Condition.find().findList();
+    return ok(myRequests.render("",bookList,conditions));
+  }
   
   /**
    * Response for a request for all the CurrentRequest available.

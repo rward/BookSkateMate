@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 
 import play.data.validation.Constraints.Required;
@@ -30,15 +31,30 @@ public class Book extends Model{
   private String bookId;
   
   
+  @Transient
+  private String password;
   
- 
   private String title;
   private String author;
   private String isbn;
   private double bookStorePrice;
   private int edition;
   
+  /**
+   * @return the password
+   */
+  public String getPassword() {
+    return password;
+  }
+
+  /**
+   * @param name the password to set
+   */
+  public void setPassword(String password) {
    
+      this.password = password;
+  
+  } 
   
   /**
    * @return the removedRequests
@@ -77,16 +93,16 @@ public class Book extends Model{
     this.offers = offers;
   }
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-  public List<RemovedRequest>removedRequests = new ArrayList<>();
+  public List<RemovedRequest>removedRequests = new ArrayList<RemovedRequest>();
   
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER )
-  public List<RemovedOffer> removedOffers = new ArrayList<>();
+  public List<RemovedOffer> removedOffers = new ArrayList<RemovedOffer>();
   
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-  public List<CurrentRequest> requests = new ArrayList<>();
+  public List<CurrentRequest> requests = new ArrayList<CurrentRequest>();
   
   @OneToMany(mappedBy="book", cascade=CascadeType.ALL,fetch=FetchType.EAGER )
-  public List<CurrentOffer> offers = new ArrayList<>();
+  public List<CurrentOffer> offers = new ArrayList<CurrentOffer>();
   
   /**
    * Constructor for book with all required fields.

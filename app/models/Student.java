@@ -43,17 +43,17 @@ public class Student extends Model{
   private String email;
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
-  public List<CurrentOffer> offers = new ArrayList<>();
+  public List<CurrentOffer> offers = new ArrayList<CurrentOffer>();
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
-  public List<CurrentRequest> requests = new ArrayList<>();
+  public List<CurrentRequest> requests = new ArrayList<CurrentRequest>();
   
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
-  public List<RemovedOffer> removedOffers = new ArrayList<>();
+  public List<RemovedOffer> removedOffers = new ArrayList<RemovedOffer>();
   
   @OneToMany(mappedBy="student", cascade=CascadeType.ALL,orphanRemoval= true)
-  public List<RemovedRequest> removedRequests = new ArrayList<>();
+  public List<RemovedRequest> removedRequests = new ArrayList<RemovedRequest>();
   
  
   /**

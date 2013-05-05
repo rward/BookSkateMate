@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 @Entity
@@ -21,16 +22,23 @@ public class Condition extends Model {
   @Id
   private long primaryKey;
    
+  
+  @Transient
+  private String password;
+  
   @Required
   @Column(unique=true, nullable=false)
   private String name = "";
   
   @OneToMany(mappedBy="condition", cascade=CascadeType.ALL)
-  private List<CurrentRequest> requests = new ArrayList<>();
+  private List<CurrentRequest> requests = new ArrayList<CurrentRequest>();
   
   @OneToMany(mappedBy="condition", cascade=CascadeType.ALL)
-  private List<CurrentOffer> offers = new ArrayList<>();
+  private List<CurrentOffer> offers = new ArrayList<CurrentOffer>();
    
+  
+  
+  
   /**
    * 
    * @param name
@@ -63,6 +71,22 @@ public class Condition extends Model {
     this.primaryKey = primaryKey;
   }
 
+  /**
+   * @return the password
+   */
+  public String getPassword() {
+    return password;
+  }
+
+  /**
+   * @param name the password to set
+   */
+  public void setPassword(String password) {
+   
+      this.password = password;
+  
+  }
+  
   /**
    * @return the name
    */

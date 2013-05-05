@@ -19,6 +19,8 @@ public class CurrentOffer extends Controller  {
   public static Result index() {
     
     List<models.CurrentOffer> offers = models.CurrentOffer.find().findList();
+    
+    
     return ok(offers.isEmpty() ? "No Offers" : offers.toString());
 
   }
@@ -65,6 +67,10 @@ public class CurrentOffer extends Controller  {
      
     
   }
+  
+ 
+  
+  
   /**
    * Response for a request the deletion of an offer.
    * @return OK or badRequest based on whether it was deleted or not if offer does 

@@ -1,0 +1,207 @@
+@(message: String)
+@implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+
+@main(message) {
+
+   <div class="container">
+  <div class="row main-features">
+    <br>
+    <div class="span">
+      <div class="well">
+        <h3>Book You need to Sell!</h3>
+        <div class="span6">
+          <span class="label label-info">Book </span> 
+        </div>
+        <br>
+        <div class="span6">
+          <select>
+            <option value="1">The Elements of Java Style</option>
+            <option value="2">Java In a Nutshell</option>
+            <option value="3">Java Concepts</option>
+            <option value="4">Introduction to Algorithms</option>
+          </select>
+        </div>
+        <br>
+        <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              <th>
+                <span class="label label-info">Current Selected Book </span> 
+              </th>
+              <th>
+                <span class="label label-info">Version </span> 
+              </th>
+              <th>
+                <span class="label label-info">ISBN </span> 
+              </th>
+              <th>
+                <span class="label label-info">Bookstore Price </span> 
+              </th>
+              <th>
+                <span class="label label-info">Cover </span> 
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <label>
+                  <b>The Elements of Style</b> 
+                </label>
+              </td>
+              <td>
+                <label>
+                  <b>2.0</b> 
+                </label>
+              </td>
+              <td>
+                <label>
+                  <b>978-0521777681</b> 
+                </label>
+              </td>
+              <td>
+                <label>
+                  <b>15.00</b> 
+                </label>
+              </td>
+              <td>
+                <img src="http://covers.openlibrary.org/b/isbn/978-0521777681-S.jpg"> 
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <div class="span3">
+          <span class="label label-info">Minimum Level of Condition </span> 
+        </div>
+        <div class="span3">
+          <span class="label label-info">Maximum Level of Condition </span> 
+        </div>
+        <br>
+        <div class="span3">
+          <select>
+            <option value="1">Like New</option>
+            <option value="2">Excelent</option>
+            <option value="3">Good</option>
+            <option value="4">Fair</option>
+            <option selected="selected" value="3">Poor</option>
+          </select>
+        </div>
+        <div class="span3">
+          <select>
+            <option value="1">Like New</option>
+            <option value="2">Excelent</option>
+            <option value="3">Good</option>
+            <option value="4">Fair</option>
+            <option value="3">Poor</option>
+          </select>
+        </div>
+        <br>
+        <br>
+        <div class="span3">
+          <span class="label label-info">Minimum Price</span> 
+        </div>
+        <div class="span3">
+          <span class="label label-info">Maximum Price</span> 
+        </div>
+        <br>
+        <div class="span3">
+          <input type="text" class="input-medium"> 
+        </div>
+        <div class="span3">
+          <input type="text" class="input-medium"> 
+        </div>
+        <br>
+        <br>
+        <a class="btn btn-primary btn-large btn-block">Search</a>
+        <br>
+        <br> 
+      </div>
+    </div>
+    <br>
+    <br> 
+  </div>
+</div>
+<div class="span7 offset1">
+  <h3>Who's Needs "The Elements of Java Style"</h3>
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>
+          <span class="label label-info">Offer made by </span> 
+        </th>
+        <th>
+          <span class="label label-info">Condition </span> 
+        </th>
+        <th>
+          <span class="label label-info">OfferPrice </span> 
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <label>
+            <b>bill@@hawaii.edu</b> 
+          </label>
+        </td>
+        <td>
+          <label>
+            <b>Good</b> 
+          </label>
+        </td>
+        <td>
+          <label>
+            <b>15.00</b> 
+          </label>
+        </td>
+        <td>
+          <a class="btn btn-primary btn-mini">Email</a> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <b>fred@@hawaii.edu</b> 
+          </label>
+        </td>
+        <td>
+          <label>
+            <b>Fair</b> 
+          </label>
+        </td>
+        <td>
+          <label>
+            <b>13.00</b> 
+          </label>
+        </td>
+        <td>
+          <a class="btn btn-primary btn-mini">Email</a> 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>
+            <b>sally@@hawaii.edu</b> 
+          </label>
+        </td>
+        <td>
+          <label>
+            <b>Like New</b> 
+          </label>
+        </td>
+        <td>
+          <label>
+            <b>16.00</b> 
+          </label>
+        </td>
+        <td>
+          <a class="btn btn-primary btn-mini">Email</a> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+}

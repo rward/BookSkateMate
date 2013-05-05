@@ -5,6 +5,14 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET     /about                      controllers.Application.about()
+
+GET     /searchRequests             controllers.Application.searchRequests()
+
+GET     /conditions                 controllers.Application.conditions()
+
+GET    /myRequests                  controllers.CurrentRequest.myRequests()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
@@ -15,12 +23,11 @@ DELETE  /students/:studentId        controllers.Student.delete(studentId: String
 
 GET     /books                      controllers.Book.index()     
 GET     /books/:bookId              controllers.Book.details(bookId: String)
-POST    /books                      controllers.Book.newBook()
+POST    /addbooks                   controllers.Book.newBook()
 DELETE  /books/:bookId              controllers.Book.delete(bookId: String)  
 
-GET     /condition                  controllers.Condition.index()     
-POST    /condition                  controllers.Condition.newCondition()
-DELETE  /condition/:name            controllers.Condition.delete(name: String)  
+POST    /conditions                  controllers.Condition.newCondition()
+#DELETE  /condition/:name            controllers.Condition.delete(name: String)  
 
 
 
@@ -34,3 +41,7 @@ GET     /requests                     controllers.CurrentRequest.index()
 GET     /requests/:studentId/:bookId  controllers.CurrentRequest.details(studentId: String,bookId: String)
 POST    /requests                     controllers.CurrentRequest.newOffer()
 DELETE  /requests/:studentId/:bookId  controllers.CurrentRequest.delete(studentId: String,bookId: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /webjars/*file              controllers.WebJarAssets.at(file)

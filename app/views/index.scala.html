@@ -1,7 +1,105 @@
 @(message: String)
+@implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
 
-@main("Welcome to Play 2.1") {
-    
-    @play20.welcome(message, style = "Java")
-    
+@main(message) {
+
+    <div class="container">
+  <div class="span3">
+    <label></label>
+  </div>
+  <br>
+  <br>
+  <div class="span10">
+    <b>Already have an Account? Sign in!
+    <input type="email" placeholder="email" name="user">
+    <input type="password" placeholder="password" name="pwd">
+    </b>
+    <a class="btn btn-mini btn-primary" href="#"><span class="btn-label">Login</span></a> 
+  </div>
+  <br>
+  <br>
+  <div class="span8">
+    <div class="well">
+      <h1>Welcome to BookSkateMate!</h1>
+      <p>
+        <b class="align-center">You're Cheap. So are the textbooks here! Be a cheapskate!</b> 
+      </p>
+      <h3 class="align-center">Buy - Sell - Trade</h3>
+      <p>Buy and Save Lots of money. Sell and Make Lots of money.</p>
+      <p>Trading Allowed! If you find a mate who has what you need and you have
+        what he needs! Then trade!</p>
+      <p>
+        <b>"<i>The last time I was a trader I almost got scrambled- Here they treat me like a hero!</i>" ~Benedict Omlet</b> 
+      </p>
+      <p></p>
+      <a class="btn pull-right btn-primary btn-large" href="#"><span class="btn-label">Sign Up Today!</span></a>
+      <br>
+      <br> 
+    </div>
+  </div>
+  <div class="span3">
+    <img src="http://robertawardivblog.files.wordpress.com/2013/04/girl_books.png"> 
+  </div>
+  <br>
+ 
+  <br>
+  <br>
+  <div class="span12">
+    <h1>BookSkateMate lets you find someone so you can:</h1>
+  </div>
+  <div class="row main-features">
+    <div class="span6">
+      <div class="well">
+        <h3>Sell a book -Make an Offer to Sell</h3>
+        <p>Have a book you don't need? Sell it for more than the bookstore would
+          give you!&nbsp;</p>
+        <p>Find a mate for your book and set sale on the Sea of Economic Prosperity!</p>
+        <p>
+          <b>"<i>Arrg Matey! Shiver me timbers! I'll have to go bury all this booty to protect it!</i>" ~Redbook the Pirate</b> 
+        </p>
+        <br>
+        <a class="btn btn-primary" href="#">
+          <span class="btn-label">Create an offer</span> 
+          </a> 
+      </div>
+    </div>
+    <div class="span6">
+      <div class="well">
+        <h3>Buy a book -Make a Request to buy</h3>
+        <p>Need a book you don't have! Buy it cheap!&nbsp;</p>
+        <p>Find a mate with the book you need! and use the savings toward that sweet
+          new laptop you want!</p>
+        <p>
+          <b>"<i>Crikey! My mates and I can eat Vegemite sandwiches all month with the money we saved!</i>" ~Some Australian Guy</b> 
+        </p>
+        <a class="btn btn-primary" href="#"><span class="btn-label">Create a request</span></a> 
+      </div>
+    </div>
+    <div class="span6">
+      <div class="well">
+        <h3>Sell a book- Search for a Request</h3>
+        <p>Maybe someone already is looking for the book you want to sell!</p>
+        <p>Search the current requests to find out!</p>
+        <p>
+          <b>"<i>I wish BookSkateMate could find you mates for your missing socks as easily as it finds you&nbsp;extra cash!</i>" ~Your Mom</b> 
+        </p>
+        <a class="btn btn-success" href="#">
+          <span class="btn-label">Search Requests</span> 
+          </a> 
+      </div>
+    </div>
+    <div class="span6">
+      <div class="well">
+        <h3>Buy a book- Search for an Offer</h3>
+        <p>Maybe someone already is trying to sell the book you need!</p>
+        <p>Search the current offers to find out!</p>
+        <p>
+          <b>"<i>I'm famous for finding mate in few moves but here they do it in one click!</i>" ~Former World Chess Champion Booky Fisher</b> 
+        </p>
+        <a class="btn btn-success" href="#"><span class="btn-label">Search Offers</span></a> 
+      </div>
+    </div>
+  </div>
+</div>
+
 }

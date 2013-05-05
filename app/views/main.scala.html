@@ -1,15 +1,54 @@
 @(title: String)(content: Html)
-
+ @defining(title.toString()) {page =>
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
+        
     </head>
     <body>
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+            <a class="brand" href="#">BookSkateMate</a>
+            <div class="navbar-content">
+                <ul class="nav ">
+                    <li @if(page == "Home"){ class="active"} >
+                        <a href="@routes.Application.index()">Home</a>
+                    </li>
+                    <li @if(page == "Search Offers"){ class="active"} >
+                        <a href="#">Search Offers</a> 
+			        </li>
+			        <li @if(page == "Search Offers"){ class="active"} >
+			            <a href="#">Search Offers</a> 
+			        </li>
+			        <li @if(page == "Search Offers"){ class="active"} >
+			            <a href="#">My Requests</a> 
+			        </li>
+			        <li @if(page == "Search Requests"){ class="active"} >
+			            <a href="@routes.Application.searchRequests()">Search Requests</a> 
+			        </li>
+			        <li @if(page == "My Offers"){ class="active"} >
+			            <a href="@routes.CurrentRequest.myRequests()">My Requests</a> 
+			        </li>
+			       <li @if(page == "Book List"){ class="active"} >
+			            <a href="@routes.Book.index()">Full Book List</a> 
+			        </li>
+			        <li @if(page == "About"){ class="active"} >
+			             <a href="@routes.Application.about()">About</a> 
+			        </li>
+			        </ul>
+			</div>
+        </div>
+        </div>
+    </div>
         @content
     </body>
 </html>
+}
