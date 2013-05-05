@@ -13,7 +13,8 @@ object ApplicationBuild extends Build {
     javaJdbc,
     javaEbean,
     "org.webjars" % "webjars-play" % "2.1.0",
-    "org.webjars" % "bootstrap" % "2.3.1"
+    "org.webjars" % "bootstrap" % "2.3.1",
+    "postgresql" % "postgresql" % "9.1-901.jdbc4"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
