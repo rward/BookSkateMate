@@ -23,10 +23,11 @@ DELETE  /students/:studentId        controllers.Student.delete(studentId: String
 
 GET     /books                      controllers.Book.index()     
 GET     /books/:bookId              controllers.Book.details(bookId: String)
-POST    /addbooks                   controllers.Book.newBook()
+GET     /addbooks                   controllers.Book.newBook()
 DELETE  /books/:bookId              controllers.Book.delete(bookId: String)  
 
 POST    /conditions                  controllers.Condition.newCondition()
+POST    /conditionList               controllers.Condition.index()
 #DELETE  /condition/:name            controllers.Condition.delete(name: String)  
 
 

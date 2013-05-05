@@ -43,35 +43,33 @@
          @for(book <- books) {
          <tr>
             <td>
-              @book.getPrimaryKey()
+              <label>@book.getPrimaryKey()</label>
+             
             </td>
             <td>
-              <input type="text" value=@book.getPrimaryKey() class="input-medium"> 
+              <label>@book.getBookId()</label>
             </td>
             <td>
-              <input type="text" value=@book.getBookId() class="input-medium"> 
+             <label>@book.getTitle()</label>
+             
             </td>
             <td>
-              <input type="text" value=@book.getTitle() class="input-medium"> 
+              <label>@book.getAuthor()</label> 
+             
             </td>
             <td>
-              <input type="text" value=@book.getAuthor() class="input-medium"> 
-            </td>
-            <td>
-              <input type="text" value=@book.getEdition() class="input-medium"> 
+            <label>@book.getEdition()</label>
+             
             </td>
              <td>
-              <input type="text" value=@book.getIsbn() class="input-medium"> 
+             <label>@book.getIsbn()</label>
+             
             </td>
              <td>
-              <input type="text" value=@book.getBookStorePrice() class="input-medium"> 
+              <label>@book.getBookStorePrice()</label>
+              
             </td>
-            <td>
-              <div class="btn-group">
-                <a class="btn btn-small btn-primary">Update</a>
-               
-              </div>
-            </td>
+            
           </tr>
          
             
