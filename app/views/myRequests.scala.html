@@ -1,4 +1,5 @@
-@(message: String,books : List[models.Book], conditions : List[models.Condition] )
+@(message: String,books : List[models.Book], conditions : List[models.Condition],
+requests : List[models.CurrentRequest], bookSelected : Long , price : String ,conditionSelected : Long )
 @implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
 
 @main("My Requests") {
@@ -8,36 +9,90 @@
    <div class="container">
   <div class="row main-features">
     <br>
-    <div class="span6">
+    <div class="span7">
       <div class="well">
         <h3>Create a Book Request</h3>
-        @helper.form(action = routes.CurrentOffer.newOffer()) {
+        @helper.form(action = routes.CurrentRequest.newRequest()) {
         
         <div class="span2">
           <span class="label label-inverse">Book </span> 
         </div>
-         <div class="span3">
+         <div class="span4">
           
-          @for(book <- books) {
-          
-          }
-          <input name="bookId" type="text" class="input-medium"> 
+          <select name="bookKey" >
+            @for(book <- books) {
+             <option value=@book.getPrimaryKey() 
+              @if(bookSelected == book.getPrimaryKey()){selected}>@book.getTitle()</option>
+             }
+           
+          </select>
+        
         </div>
+         <table class="table table-condensed table-striped">
+          <thead>
+            <tr>
+              
+              <th>
+                <span class="label label-info">Version </span> 
+              </th>
+              <th>
+                <span class="label label-info">ISBN </span> 
+              </th>
+              <th>
+                <span class="label label-info">Bookstore Price </span> 
+              </th>
+              <th>
+                <span class="label label-info">Cover </span> 
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr>
+               @for(book <- books) {
+               @if(bookSelected == book.getPrimaryKey()){ 
+              <td>
+                <label>
+                  <b>@book.getEdition()</b> 
+                </label>
+              </td>
+              <td>
+                <label>
+                  <b>@book.getIsbn()</b> 
+                </label>
+              </td>
+              <td>
+                <label>
+                  <b>@book.getBookStorePrice()</b> 
+                </label>
+              </td>
+              <td>
+                 <img src="http://covers.openlibrary.org/b/isbn/@book.getIsbn()-S.jpg"> 
+              </td>
+              
+              }}
+            </tr>
+            
+          </tbody>
+        </table>
+        
          <div class="span2">
           <span class="label label-inverse">Condition</span> 
         </div>
-         <div class="span3">
-          
+         <div class="span4">
+           <select name="conditionKey">
           @for(condition <- conditions) {
-          
+            <option @if(conditionSelected == condition.getPrimaryKey()){ selected } 
+            value=@condition.getPrimaryKey()>@condition.getName()</option>
           }
-          <input name="bookId" type="text" class="input-medium"> 
+           </select>
         </div>
         <div class="span2">
           <span class="label label-inverse">Price</span> 
         </div>
          <div class="span3">
-          <input name="price" type="text" class="input-medium"> <br>
+          <input name="price" type="text" value="@price" class="input-medium"> <br>
         <br>
          
         
@@ -83,20 +138,17 @@
           </tr>
         </thead>
         <tbody>
-         @for(book <- books) {
+         @for(request <- requests) {
          <tr>
             <td>
-              @book.getPrimaryKey()
+              @request.getBook().getTitle()
             </td>
             
             <td>
-              <input type="text" value=@book.getTitle() class="input-medium"> 
+               @request.getCondition().getName()
             </td>
             <td>
-              <input type="text" value=@book.getIsbn() class="input-medium"> 
-            </td>
-             <td>
-              <input type="text" value=@book.getBookStorePrice() class="input-medium"> 
+              <input type="text" value=@request.getPrice() class="input-medium"> 
             </td>
             <td>
               <div class="btn-group">
@@ -113,7 +165,7 @@
           
         </tbody>
       </table>
-      @if(books.size() ==0){ No Current Requests}
+      @if(requests.size() ==0){ No Current Requests}
       
     
        

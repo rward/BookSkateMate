@@ -34,7 +34,9 @@
             <th>
               <span class="label label-info">Store Prices </span> 
             </th>
-            <th></th>
+            <th>
+             <span class="label label-info">Cover </span> 
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +71,16 @@
               <label>@book.getBookStorePrice()</label>
               
             </td>
+            <td>
+            <img src="http://covers.openlibrary.org/b/isbn/@book.getIsbn()-S.jpg"> 
             
+            </td>
+            <td>
+            <div class="btn-group ">
+                <a class="btn btn-success btn-mini">Offers</a>
+                <a class="btn btn-primary btn-mini">Requests</a> 
+            </div>
+        </td>
           </tr>
          
             

@@ -22,21 +22,23 @@
                     <li @if(page == "Home"){ class="active"} >
                         <a href="@routes.Application.index()">Home</a>
                     </li>
+                    <li @if(page == "My Offers"){ class="active"} >
+                         <a href="@routes.CurrentOffer.myOffers()">My Offers</a> 
+                    </li>
+                    <li @if(page == "My Requests"){ class="active"} >
+                        <a href="@routes.CurrentRequest.myRequests()">My Requests</a> 
+                    </li>
                     <li @if(page == "Search Offers"){ class="active"} >
                         <a href="#">Search Offers</a> 
 			        </li>
 			        <li @if(page == "Search Offers"){ class="active"} >
 			            <a href="#">Search Offers</a> 
 			        </li>
-			        <li @if(page == "Search Offers"){ class="active"} >
-			            <a href="#">My Requests</a> 
-			        </li>
+			        
 			        <li @if(page == "Search Requests"){ class="active"} >
 			            <a href="@routes.Application.searchRequests()">Search Requests</a> 
 			        </li>
-			        <li @if(page == "My Offers"){ class="active"} >
-			            <a href="@routes.CurrentRequest.myRequests()">My Requests</a> 
-			        </li>
+			        
 			       <li @if(page == "Book List"){ class="active"} >
 			            <a href="@routes.Book.index()">Full Book List</a> 
 			        </li>

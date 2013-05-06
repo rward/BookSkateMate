@@ -11,7 +11,9 @@ GET     /searchRequests             controllers.Application.searchRequests()
 
 GET     /conditions                 controllers.Application.conditions()
 
-GET    /myRequests                  controllers.CurrentRequest.myRequests()
+GET     /myRequests                 controllers.CurrentRequest.myRequests()
+
+GET     /myOffers                   controllers.CurrentOffer.myOffers()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -40,7 +42,7 @@ DELETE  /offers/:studentId/:bookId  controllers.CurrentOffer.delete(studentId: S
 
 GET     /requests                     controllers.CurrentRequest.index()     
 GET     /requests/:studentId/:bookId  controllers.CurrentRequest.details(studentId: String,bookId: String)
-POST    /requests                     controllers.CurrentRequest.newOffer()
+POST    /requests                     controllers.CurrentRequest.newRequest()
 DELETE  /requests/:studentId/:bookId  controllers.CurrentRequest.delete(studentId: String,bookId: String)
 
 # Map static resources from the /public folder to the /assets URL path

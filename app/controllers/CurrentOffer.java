@@ -1,9 +1,14 @@
 package controllers;
 
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.myOffers;
 import java.util.List;
+import models.Book;
+import models.Condition;
+import models.Student;
 import static play.data.Form.form;
 /**
  * Controller for offers that are currently active.
@@ -11,6 +16,65 @@ import static play.data.Form.form;
  *
  */
 public class CurrentOffer extends Controller  {
+  
+  
+ public static Result myOffers() {
+    
+    List<models.CurrentOffer> offerList = models.CurrentOffer.find().findList();
+    List<models.Book> bookList = models.Book.find().findList();
+    List<models.Condition> conditions = models.Condition.find().findList();
+    return ok(myOffers.render("",bookList,conditions,offerList,bookList.get(0).primaryKey," ",0L));
+  }
+ public static Result myOffers(String message, boolean returnCode, Long selectedBook,
+     Double price , Long conditionIndex ) {
+    
+    List<models.CurrentOffer> offerList = models.CurrentOffer.find().findList();
+    List<models.Book> bookList = models.Book.find().findList();
+    List<models.Condition> conditions = models.Condition.find().findList();
+    if (returnCode) {
+      return ok(myOffers.render(message,bookList,conditions,offerList,
+          selectedBook, price.toString(), conditionIndex));
+    }
+    else
+    {
+      return badRequest(myOffers.render(message,bookList,conditions,offerList,
+          selectedBook, price.toString(), conditionIndex));
+      
+      
+    }
+  }
+  
+ /**
+  * Response for a request the creation of a new request.
+  * @return OK or badRequest based on whether new request created
+  */
+  public static Result newOffer() {
+    
+    DynamicForm form = form().bindFromRequest();   
+    Long bid  = Long.parseLong(form.data().get("bookKey"));
+    Long cid  = Long.parseLong(form.data().get("conditionKey"));
+    
+    Book dbBook =  Book.find().byId(bid);
+    Condition dbCondition =  Condition.find().byId(cid);
+    Student dbStudent =  Student.find().findList().get(0);
+    double price = Double.parseDouble(form.data().get("price"));
+    models.CurrentRequest newRequest = new models.CurrentRequest(price,dbCondition,dbBook, dbStudent);
+   
+    if(dbBook == null || dbStudent == null || dbStudent == null  ) {
+      return myOffers("The request StudetnId, BookId and Condtion name required.",false,bid,price,cid ); 
+    }
+       
+    try {
+      newRequest.save();
+    }
+    catch (Exception e) {
+      return myOffers("The request StudetnId, BookId and Condtion name required.",false,bid,price ,cid ); 
+    }
+    
+    return myOffers("Request Created.",true,bid,price,cid ); 
+     
+    
+  }
   
   /**
    * Response for a request for all the CurrentOffers available.
@@ -36,38 +100,7 @@ public class CurrentOffer extends Controller  {
     return (offer == null) ? notFound("No offer found") : ok(offer.toString());
     
   }
- /**
-  * Response for a request the creation of a new offer.
-  * @return OK or badRequest based on whether new request created
-  */
-  public static Result newOffer() {
-    
-    Form<models.CurrentOffer> offerForm = form(models.CurrentOffer.class).bindFromRequest();
-        
-    if(offerForm.hasErrors()) {
-      
-      return badRequest("The offer StudetnId, BookId and Condtion name required.");
-    }
-   
-    models.CurrentOffer offer = offerForm.get();
-    if(offer.getStudent().getPrimaryKey() == 0 || offer.getBook().getPrimaryKey() == 0 ||
-        offer.getCondition().getPrimaryKey() == 0 ) {
-      
-      return badRequest("The offer StudetnId, BookId and Condtion name required.");
-    }
-       
-    try {
-      offer.save();
-    }
-    catch (Exception e) {
-      return badRequest("The condition name or bookId pr studenId is not valid.");
-    }
-    
-    return ok(offer.toString());
-     
-    
-  }
-  
+ 
  
   
   
