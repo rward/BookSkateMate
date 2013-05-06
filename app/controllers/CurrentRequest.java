@@ -69,14 +69,23 @@ public class CurrentRequest extends Controller  {
   */
   public static Result newRequest() {
     
-    DynamicForm form = form().bindFromRequest();   
-    Long bid  = Long.parseLong(form.data().get("bookKey"));
-    Long cid  = Long.parseLong(form.data().get("conditionKey"));
+    DynamicForm form = form().bindFromRequest();  
+    
+    Long bid  = 0L;
+    Long cid  = 0L;
+    if(form.data().get("bookKey") != null)
+      bid  = Long.parseLong(form.data().get("bookKey"));
+    if(form.data().get("conditionKey") != null)
+      cid  = Long.parseLong(form.data().get("conditionKey"));
+    double price = 0;
+    if(form.data().get("price") != null)
+      price = Double.parseDouble(form.data().get("price"));
     
     Book dbBook =  Book.find().byId(bid);
     Condition dbCondition =  Condition.find().byId(cid);
     Student dbStudent =  Student.find().findList().get(0);
-    double price = Double.parseDouble(form.data().get("price"));
+    
+    
     models.CurrentRequest newRequest = new models.CurrentRequest(price,dbCondition,dbBook, dbStudent);
    
     if(dbBook == null || dbStudent == null || dbStudent == null  ) {
@@ -89,7 +98,7 @@ public class CurrentRequest extends Controller  {
     catch (Exception e) {
       return myRequests("The request StudetnId, BookId and Condtion name required.",false,bid,price ,cid ); 
     }
-    
+   
     return myRequests("Request Created.",true,bid,price,cid ); 
      
     

@@ -47,7 +47,7 @@ public class ControllerTest {
   }
   @Test
   public void TestStudetnsController() {
-      
+     
     //Test Get 
     Result result = callAction(controllers.routes.ref.Student.index());
     assertTrue("Empty Students", contentAsString(result).contains("No Students"));
@@ -129,11 +129,11 @@ public class ControllerTest {
   bookData.put("isbn", "isbn");
   bookData.put("edition", "2");
   bookData.put("bookStorePrice", "22.00");
-  
+  bookData.put("password", "!Fred3");
   FakeRequest request = fakeRequest();
   request.withFormUrlEncodedBody(bookData);
   result = callAction(controllers.routes.ref.Book.newBook(),request);
-  assertEquals("Create new book",OK, status(result));
+  assertEquals("Create new book via Contoller",OK, status(result));
   
   //request duplicate addition
   request = fakeRequest();
@@ -174,7 +174,7 @@ public class ControllerTest {
   
   Map<String,String> condtionData = new HashMap<String, String>();
   condtionData.put("name", "Condition-02");
- 
+  condtionData.put("password", "!Fred3");
   FakeRequest request = fakeRequest(); 
   request.withFormUrlEncodedBody(condtionData);
   result = callAction(controllers.routes.ref.Condition.newCondition(),request);
@@ -193,7 +193,7 @@ public class ControllerTest {
   
    
   // Test DELETE /products/Product-01(a valid ProductId)
-  result = callAction(controllers.routes.ref.Condition.delete(name));
+  result = callAction(controllers.routes.ref.Condition.  delete(name));
   assertEquals("Delete current product OK",OK, status(result));
   result = callAction(controllers.routes.ref.Condition.index());
   assertFalse("Name deleted of condition", contentAsString(result).contains(name));
@@ -252,6 +252,8 @@ public class ControllerTest {
     Map<String,String> offerData = new HashMap<String, String>();
     offerData.put("book.primaryKey", "2");
     offerData.put("condition.primaryKey", "1");
+    offerData.put("bookKey", "2");
+    offerData.put("conditionKey", "1");
     offerData.put("student.primaryKey", "1");
     offerData.put("bookId", "Book-02");
     offerData.put("studentId", "Students-01");
@@ -262,7 +264,7 @@ public class ControllerTest {
     request.withFormUrlEncodedBody(offerData);
     result = callAction(controllers.routes.ref.CurrentOffer.newOffer(),request);
         
-    assertEquals("Create new Offer",OK, status(result));
+    assertEquals("Create new Offer Test",OK, status(result));
     
          
     // Test POST /products (with simulated, invalid form data
@@ -336,6 +338,8 @@ public class ControllerTest {
     book2.save();
     
     Map<String,String> requestData = new HashMap<String, String>();
+    requestData.put("bookKey", "2");
+    requestData.put("conditionKey", "1");
     requestData.put("book.primaryKey", "2");
     requestData.put("condition.primaryKey", "1");
     requestData.put("student.primaryKey", "1");
@@ -346,14 +350,14 @@ public class ControllerTest {
      
     FakeRequest request = fakeRequest();
     request.withFormUrlEncodedBody(requestData);
-    result = callAction(controllers.routes.ref.CurrentRequest.newOffer(),request);
+    result = callAction(controllers.routes.ref.CurrentRequest.newRequest(),request);
         
-    assertEquals("Create new Offer",OK, status(result));
+    assertEquals("Create new Request",OK, status(result));
     
         
     // Test POST /requests (with simulated, invalid form data
     request = fakeRequest();
-    result = callAction(controllers.routes.ref.CurrentRequest.newOffer(),request);
+    result = callAction(controllers.routes.ref.CurrentRequest.newRequest(),request);
     assertEquals("Create bad offer fails",BAD_REQUEST, status(result));
     
      

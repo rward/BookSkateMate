@@ -29,12 +29,9 @@
                         <a href="@routes.CurrentRequest.myRequests()">My Requests</a> 
                     </li>
                     <li @if(page == "Search Offers"){ class="active"} >
-                        <a href="#">Search Offers</a> 
+                        <a href="@routes.Application.searchOffers()">Search Offers</a> 
 			        </li>
-			        <li @if(page == "Search Offers"){ class="active"} >
-			            <a href="#">Search Offers</a> 
-			        </li>
-			        
+			               
 			        <li @if(page == "Search Requests"){ class="active"} >
 			            <a href="@routes.Application.searchRequests()">Search Requests</a> 
 			        </li>

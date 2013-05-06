@@ -9,6 +9,8 @@ GET     /about                      controllers.Application.about()
 
 GET     /searchRequests             controllers.Application.searchRequests()
 
+GET     /searchOffers               controllers.Application.searchOffers()
+
 GET     /conditions                 controllers.Application.conditions()
 
 GET     /myRequests                 controllers.CurrentRequest.myRequests()
@@ -30,7 +32,7 @@ DELETE  /books/:bookId              controllers.Book.delete(bookId: String)
 
 POST    /conditions                  controllers.Condition.newCondition()
 POST    /conditionList               controllers.Condition.index()
-#DELETE  /condition/:name            controllers.Condition.delete(name: String)  
+DELETE  /condition/:name            controllers.Condition.delete(name: String)  
 
 
 

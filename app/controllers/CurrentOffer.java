@@ -51,21 +51,33 @@ public class CurrentOffer extends Controller  {
   public static Result newOffer() {
     
     DynamicForm form = form().bindFromRequest();   
-    Long bid  = Long.parseLong(form.data().get("bookKey"));
-    Long cid  = Long.parseLong(form.data().get("conditionKey"));
+    Long bid  = -1L;
+    Long cid  = -1L;
+        
+    if(form.data().get("bookKey") != null) {
+      bid  = Long.parseLong(form.data().get("bookKey"));
+    }
+    if(form.data().get("conditionKey") != null) {
+      cid  = Long.parseLong(form.data().get("conditionKey"));
+    }
+    double price = 0;
+    if(form.data().get("price") != null) {
+      price = Double.parseDouble(form.data().get("price"));
+    }
+    
     
     Book dbBook =  Book.find().byId(bid);
     Condition dbCondition =  Condition.find().byId(cid);
     Student dbStudent =  Student.find().findList().get(0);
-    double price = Double.parseDouble(form.data().get("price"));
-    models.CurrentRequest newRequest = new models.CurrentRequest(price,dbCondition,dbBook, dbStudent);
+  
+    models.CurrentOffer newOffer = new models.CurrentOffer(price,dbCondition,dbBook, dbStudent);
    
     if(dbBook == null || dbStudent == null || dbStudent == null  ) {
       return myOffers("The request StudetnId, BookId and Condtion name required.",false,bid,price,cid ); 
     }
        
     try {
-      newRequest.save();
+      newOffer.save();
     }
     catch (Exception e) {
       return myOffers("The request StudetnId, BookId and Condtion name required.",false,bid,price ,cid ); 
