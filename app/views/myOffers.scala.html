@@ -102,7 +102,7 @@ offers : List[models.CurrentOffer], bookSelected : Long , price : String ,condit
       
         
         <div class="span5">
-            <input type="submit" class="btn btn-primary btn-large btn-block" value="Create New Offer" />
+            <input type="submit" class="btn btn-primary btn-large btn-block" id="newOffer" value="Create New Offer" />
         </div>
         }
         <br>
@@ -163,7 +163,7 @@ offers : List[models.CurrentOffer], bookSelected : Long , price : String ,condit
           
         </tbody>
       </table>
-      @if(offers.size() ==0){ No Current Requests}
+      @if(offers.size() ==0){ No Current Offers}
       
     
        

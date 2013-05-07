@@ -1,5 +1,6 @@
 package controllers;
 
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -53,16 +54,19 @@ public class CurrentOffer extends Controller  {
     DynamicForm form = form().bindFromRequest();   
     Long bid  = -1L;
     Long cid  = -1L;
-        
+       
     if(form.data().get("bookKey") != null) {
       bid  = Long.parseLong(form.data().get("bookKey"));
+      
     }
     if(form.data().get("conditionKey") != null) {
       cid  = Long.parseLong(form.data().get("conditionKey"));
+      
     }
-    double price = 0;
+    Double price = 0.0;
     if(form.data().get("price") != null) {
       price = Double.parseDouble(form.data().get("price"));
+     
     }
     
     
@@ -83,7 +87,7 @@ public class CurrentOffer extends Controller  {
       return myOffers("The request StudetnId, BookId and Condtion name required.",false,bid,price ,cid ); 
     }
     
-    return myOffers("Request Created.",true,bid,price,cid ); 
+    return myOffers("Offer Created.",true,bid,price,cid ); 
      
     
   }

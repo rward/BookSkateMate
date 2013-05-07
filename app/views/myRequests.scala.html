@@ -18,7 +18,7 @@ requests : List[models.CurrentRequest], bookSelected : Long , price : String ,co
         </div>
          <div class="span4">
           
-          <select name="bookKey" >
+          <select name="bookKey" name="bookKey" >
             @for(book <- books) {
              <option value=@book.getPrimaryKey() 
               @if(bookSelected == book.getPrimaryKey()){selected}>@book.getTitle()</option>
@@ -103,7 +103,7 @@ requests : List[models.CurrentRequest], bookSelected : Long , price : String ,co
       
         
         <div class="span5">
-            <input type="submit" class="btn btn-primary btn-large btn-block" value="Create New Request" />
+            <input type="submit" class="btn btn-primary btn-large btn-block" id="newRequest" value="Create New Request" />
         </div>
         }
         <br>

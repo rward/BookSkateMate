@@ -9,7 +9,7 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/index.min.js")" type="text/javascript"></script>
+       
         
     </head>
     <body>
@@ -19,10 +19,10 @@
             <a class="brand" href="#">BookSkateMate</a>
             <div class="navbar-content">
                 <ul class="nav ">
-                    <li @if(page == "Home"){ class="active"} >
+                    <li name="Home" @if(page == "BookSkateMate Home Page"){ class="active"} >
                         <a href="@routes.Application.index()">Home</a>
                     </li>
-                    <li @if(page == "My Offers"){ class="active"} >
+                    <li name="myOffers" @if(page == "My Offers"){ class="active"} >
                          <a href="@routes.CurrentOffer.myOffers()">My Offers</a> 
                     </li>
                     <li @if(page == "My Requests"){ class="active"} >
