@@ -4,6 +4,8 @@ import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.running;
 import static play.test.Helpers.testServer;
+import java.util.HashMap;
+import java.util.Map;
 import models.Book;
 import models.Condition;
 import models.Student;
@@ -54,9 +56,16 @@ public class ViewTest {
   
   @Test
   public void testIndexPage () {
-    running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+    
+    Map<String, String> settings = new HashMap<String, String>();
+    settings.putAll(inMemoryDatabase());
+    settings.put("DemoData", "true");
+    
+    
+    
+    running(testServer(3333, fakeApplication(settings)), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
-        addData();
+        
         IndexPage homePage = new IndexPage(browser.getDriver(), 3333);
         browser.goTo(homePage);
         homePage.isAt();
@@ -68,10 +77,11 @@ public class ViewTest {
   
   @Test
   public void testMyOffersPage () {
-    
-    running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+    Map<String, String> settings = new HashMap<String, String>();
+    settings.putAll(inMemoryDatabase());
+    settings.put("DemoData", "true");
+    running(testServer(3333, fakeApplication(settings)), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
-        addData();
         MyOffersPage offersPage = new MyOffersPage(browser.getDriver(), 3333);
         browser.goTo(offersPage);
         offersPage.isAt();
@@ -87,10 +97,12 @@ public class ViewTest {
   }
   @Test
   public void testMyRequestsPage () {
-    
-    running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, new Callback<TestBrowser>() {
+    Map<String, String> settings = new HashMap<String, String>();
+    settings.putAll(inMemoryDatabase());
+    settings.put("DemoData", "true");
+    running(testServer(3333, fakeApplication(settings)), HTMLUNIT, new Callback<TestBrowser>() {
       public void invoke(TestBrowser browser) {
-        addData();
+       
         MyRequestsPage requestsPage = new MyRequestsPage(browser.getDriver(), 3333);
         browser.goTo(requestsPage);
         requestsPage.isAt();
